@@ -44,7 +44,7 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
                 '/' => {if num2 == 0.0 { return Err("cannot divide by zero".to_string());}
                     num1 / num2
                 
-                    };
+                    },
                 _ => return Some(Err("invalid operator".to_string()))
             };
             input.push(result);
@@ -52,8 +52,8 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
             return Some(Err("invalid token". to_string()));
         }
     }
-    if input.len() 1= 1 {
+    if input.len() != 1 {
         return Err("Invalid expression".to_string());
     }
-    Ok(input[0])
-}None}
+   Some(Ok(input[0]))
+}
