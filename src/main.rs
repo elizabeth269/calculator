@@ -41,9 +41,9 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
                 '+' => num1 + num2,
                 '-' => num1 - num2,
                 '*' => num1 * num2,
-                '/' => {if num2 == 0.0 { return Err("cannot divide by zero".to_string());{
-                    break num1 / num2;
-                }
+                '/' => {if num2 == 0.0 { return Err("cannot divide by zero".to_string());}
+                    num1 / num2
+                
                     };
                 _ => return Some(Err("invalid operator".to_string()))
             };
