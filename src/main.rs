@@ -17,8 +17,8 @@ fn main() {
         let result = evaluate(&tokens);
         match result = {
             
-            Some(Ok(value)) => println!("Result: {}", value)?;
-            // Some(Err(err)) => println!("Error: {}", err);
+            Ok(value) => println!("Result: {}", value);
+            Err(err) => println!("Error: {}", err);
             None => println!("Error: Invalid Expression");
 
         }
