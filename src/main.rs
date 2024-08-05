@@ -1,4 +1,4 @@
-use core::prelude;
+
 use std::io;
 fn main() {
     //instrction
@@ -14,10 +14,12 @@ fn main() {
             break 'cal;
         }
         let tokens = tokenized_input(&user_input);
-        let resulttt = evaluate(&tokens);
-        match resulttt = {
-            Ok(value) => println!("Result: {}", value),
-            Err(err) => println!("Error: {}", err),
+        let result = evaluate(&tokens);
+        match result = {
+            
+            Some(Ok(value)) => println!("Result: {}", value)?;
+            // Some(Err(err)) => println!("Error: {}", err);
+            None => println!("Error: Invalid Expression");
 
         }
     }
@@ -31,7 +33,7 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
     for token in tokens {
         if let Ok(num) = token.parse::<f64>() {
             input.push(num);
-        } else if let Some(operation) = token.parse::<char>() {
+        } else if let Ok(operation) = token.parse::<char>() {
             if input.len() < 2 {
                 return Some(Err("nor enough oprands".to_string()));
             }
@@ -41,7 +43,7 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
                 '+' => num1 + num2,
                 '-' => num1 - num2,
                 '*' => num1 * num2,
-                '/' => {if num2 == 0.0 { return Err("cannot divide by zero".to_string());}
+                '/' => {if num2 == 0.0 { return Some(Err("cannot divide by zero".to_string()));}
                     num1 / num2
                 
                     },
@@ -53,7 +55,7 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
         }
     }
     if input.len() != 1 {
-        return Err("Invalid expression".to_string());
+        return Some(Err("Invalid expression".to_string()));
     }
    Some(Ok(input[0]))
 }
