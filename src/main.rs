@@ -1,4 +1,3 @@
-
 use std::io;
 fn main() {
     //instrction
@@ -15,12 +14,10 @@ fn main() {
         }
         let tokens = tokenized_input(&user_input);
         let result = evaluate(&tokens);
-        match result = {
-            
-            Ok(value) => println!("Result: {}", value);
-            Err(err) => println!("Error: {}", err);
-            None => println!("Error: Invalid Expression");
-
+        match result {
+            Some(Ok(value)) => println!("Result: {}", value),
+            Some(Err(err)) => println!("Error: {}", err),
+            None => println!("Error: Invalid Expression"),
         }
     }
 }
@@ -28,7 +25,7 @@ fn main() {
 fn tokenized_input(user_input: &str) -> Vec<String> {
     user_input.split_whitespace().map(str::to_string).collect()
 }
-fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
+fn evaluate(tokens: &[String]) -> Option<Result<f64, String>> {
     let mut input = vec![];
     for token in tokens {
         if let Ok(num) = token.parse::<f64>() {
@@ -43,19 +40,21 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>>{
                 '+' => num1 + num2,
                 '-' => num1 - num2,
                 '*' => num1 * num2,
-                '/' => {if num2 == 0.0 { return Some(Err("cannot divide by zero".to_string()));}
+                '/' => {
+                    if num2 == 0.0 {
+                        return Some(Err("cannot divide by zero".to_string()));
+                    }
                     num1 / num2
-                
-                    },
-                _ => return Some(Err("invalid operator".to_string()))
+                }
+                _ => return Some(Err("invalid operator".to_string())),
             };
             input.push(result);
-        }else {
-            return Some(Err("invalid token". to_string()));
+        } else {
+            return Some(Err("invalid token".to_string()));
         }
     }
     if input.len() != 1 {
         return Some(Err("Invalid expression".to_string()));
     }
-   Some(Ok(input[0]))
+    Some(Ok(input[0]))
 }
