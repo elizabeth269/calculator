@@ -8,7 +8,7 @@ fn main() {
         io::stdin()
             .read_line(&mut user_input)
             .expect("couldn't read line");
-        println!("{user_input}");
+        // println!("{user_input}");
         if user_input.trim().contains("q") {
             break 'cal;
         }
@@ -30,9 +30,10 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>> {
     for token in tokens {
         if let Ok(num) = token.parse::<f64>() {
             input.push(num);
+            println!("{input:?}");
         } else if let Ok(operation) = token.parse::<char>() {
             if input.len() < 2 {
-                return Some(Err("nor enough oprands".to_string()));
+                return Some(Err("not enough oprands".to_string()));
             }
             let num2 = input.pop().unwrap();
             let num1 = input.pop().unwrap();
@@ -53,8 +54,8 @@ fn evaluate(tokens: &[String]) -> Option<Result<f64, String>> {
             return Some(Err("invalid token".to_string()));
         }
     }
-    if input.len() != 1 {
-        return Some(Err("Invalid expression".to_string()));
-    }
+    // if input.len() != 1 {
+    //     return Some(Err("Invalid expression".to_string()));
+    // }
     Some(Ok(input[0]))
 }
